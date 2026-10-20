@@ -45,6 +45,10 @@ Recipient: `0x5f3046bD5aA3c6d4575AF09B8198d584f130708E`
 |---|---|---|
 | Study Credit (STCR) | 1.0 STCR | [0x3e7b7bde…4ddf](https://sepolia.etherscan.io/tx/0x3e7b7bde944ef4fc6d95c73dafbcf8800b674045154b01115ca31cb7cd974ddf) |
 | Coffee Token (CAFE) | 1.0 CAFE | [0x29ccffb5…a2c5](https://sepolia.etherscan.io/tx/0x29ccffb5ecd6d09a703a3064bf4b1b043ad28cebe8c7986f1e218e336ebca2c5) |
+| Study Credit (STCR), extra | 100 STCR | [0x20f528ed…4979](https://sepolia.etherscan.io/tx/0x20f528ed44db03d7c6affd7a620f46b42d21bfd3b81dfbe2d71f576f3edf4979) |
+| Coffee Token (CAFE), extra | 100 CAFE | [0x47ab8779…7faf](https://sepolia.etherscan.io/tx/0x47ab8779478ea52f9b379196f851da10757b79a71f7eca1c278bfe2ea9907faf) |
+
+The lecturer wallet holds 101 STCR and 101 CAFE in total.
 
 ## Other transfers
 
