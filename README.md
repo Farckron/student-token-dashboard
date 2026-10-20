@@ -110,6 +110,7 @@ contracts/CoffeeToken.sol   Token B source
 index.html                  Dashboard page and styles
 app.js                      Dashboard logic (wallet, balances, transfers)
 README.md                   This file
+scripts/                    Node scripts used: compile (solc), deploy + transfers, 16.10 click task, UI tests (read keys from a local file outside the repo)
 screenshots/                Test evidence from the public page
 ```
 
