@@ -56,8 +56,11 @@ Recipient: `0x5f3046bD5aA3c6d4575AF09B8198d584f130708E`
 | Classmate (Amir) | [0x8898aaBCf31f5CD257d403453F5F16279562Ea70](https://sepolia.etherscan.io/address/0x8898aaBCf31f5CD257d403453F5F16279562Ea70) | STCR | 10 | [0x8946f296…da18](https://sepolia.etherscan.io/tx/0x8946f2963574053514b17a5e60c13e9a154d8bfded61b96a2453c506a517da18) |
 | Classmate (Mary) | [0x49E3A4D5971C82BCc892ADb17c4129710c55cA77](https://sepolia.etherscan.io/address/0x49E3A4D5971C82BCc892ADb17c4129710c55cA77) | CAFE | 100 | [0xa190bcbd…4a66](https://sepolia.etherscan.io/tx/0xa190bcbd14b26bb8107542a14f994dfa409268e3c0045c849291098949594a66) |
 | Classmate (Amir) | [0x8898aaBCf31f5CD257d403453F5F16279562Ea70](https://sepolia.etherscan.io/address/0x8898aaBCf31f5CD257d403453F5F16279562Ea70) | CAFE | 100 | [0xaa62a796…6679](https://sepolia.etherscan.io/tx/0xaa62a7964b0206d573be56db79d9d7879232e22006534deaf284a3d9157a6679) |
+| Second test wallet, sent from the dashboard UI | [0x7acf8A4f96417c8714E8564A45E34c0DA224EF16](https://sepolia.etherscan.io/address/0x7acf8A4f96417c8714E8564A45E34c0DA224EF16) | STCR | 1 | [0x70ff9f65…83c3](https://sepolia.etherscan.io/tx/0x70ff9f6523ad2eeecc0ffadceb76324cb18aab078818f7301bedb98ad83683c3) |
 
 ## Test results
+
+UI tests ran on the public GitHub Pages URL in headless Chrome. A small scripted EIP-1193 wallet stood in for MetaMask: it answers the same requests (`eth_requestAccounts`, `eth_chainId`, `wallet_switchEthereumChain`, `eth_sendTransaction`) and signs real Sepolia transactions. The live demo uses real MetaMask.
 
 | Test | What is checked | Result |
 |---|---|---|
@@ -66,12 +69,14 @@ Recipient: `0x5f3046bD5aA3c6d4575AF09B8198d584f130708E`
 | Transfers | Tokens sent to other wallets arrive and balances change on both sides | Pass: after all transfers above, totalSupply() is unchanged and sender/recipient balances add up |
 | Lecturer transfer A | 1.0 STCR sent to the lecturer wallet | Pass: receipt status 1, Transfer event from the STCR contract to the lecturer, value 10^18 (1.0 STCR) |
 | Lecturer transfer B | 1.0 CAFE sent to the lecturer wallet | Pass: receipt status 1, Transfer event from the CAFE contract to the lecturer, value 10^18 (1.0 CAFE) |
-| UI balances | Dashboard shows correct balances for two different wallets | TODO |
-| Wrong address | Invalid recipient is rejected before any wallet request | TODO |
-| Excess/zero amount | Amount above balance, zero or empty is rejected with a clear message | TODO |
-| Wrong chain | On another network the app blocks sending and offers to switch to Sepolia | TODO |
-| MetaMask cancellation | Rejecting in MetaMask shows "Transaction cancelled", never success | TODO |
-| Reload | After reload the balances still match the blockchain | TODO |
+| UI balances | Dashboard shows correct balances for two different wallets | Pass: wallet A 9879.0 STCR / 98799.0 CAFE and wallet B 101.0 STCR / 1000.0 CAFE, equal to balanceOf() on chain ([A](screenshots/01-wallet-a-balances.png), [B](screenshots/06-wallet-b-balances.png)) |
+| Wrong address | Invalid recipient is rejected before any wallet request | Pass: "0x123" shows "Invalid address...", no transaction request sent to the wallet ([screenshot](screenshots/02-invalid-address.png)) |
+| Excess/zero amount | Amount above balance, zero or empty is rejected with a clear message | Pass: 0 shows "Amount must be greater than zero."; 1000000 shows "Amount exceeds your balance (9879.0 STCR)." ([screenshot](screenshots/03-insufficient-balance.png)) |
+| Wrong chain | On another network the app blocks sending and offers to switch to Sepolia | Pass: on chain 0x1 Send is disabled with "Wrong network..." and a Switch to Sepolia button; switching enables Send ([screenshot](screenshots/07-wrong-network.png)) |
+| MetaMask cancellation | Rejecting in MetaMask shows "Transaction cancelled", never success | Pass: wallet rejection (code 4001) shows "Transaction cancelled.", no success message ([screenshot](screenshots/04-cancelled.png)) |
+| Reload | After reload the balances still match the blockchain | Pass: after a UI transfer and page reload the page reconnects without a popup and shows 9878.0 STCR, equal to the chain |
+
+Screenshots: [balances](screenshots/01-wallet-a-balances.png), [successful UI transfer](screenshots/05-transfer-success.png), [invalid address](screenshots/02-invalid-address.png), [insufficient balance](screenshots/03-insufficient-balance.png), [cancelled](screenshots/04-cancelled.png), [wallet B](screenshots/06-wallet-b-balances.png), [wrong network](screenshots/07-wrong-network.png).
 
 ## How to get tokens
 
@@ -105,6 +110,7 @@ contracts/CoffeeToken.sol   Token B source
 index.html                  Dashboard page and styles
 app.js                      Dashboard logic (wallet, balances, transfers)
 README.md                   This file
+screenshots/                Test evidence from the public page
 ```
 
 ## Safety notes
